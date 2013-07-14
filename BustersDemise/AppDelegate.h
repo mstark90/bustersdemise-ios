@@ -7,13 +7,19 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <CoreData/CoreData.h>
 
-@class ViewController;
+@class TabViewController;
+@class BDSensorReader;
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 
-@property (strong, nonatomic) ViewController *viewController;
+@property (strong, nonatomic) UIViewController *viewController;
+
+@property (nonatomic, retain) NSManagedObjectContext *context;
+
+@property (nonatomic, retain) BDSensorReader* sensorReader;
 
 @end
