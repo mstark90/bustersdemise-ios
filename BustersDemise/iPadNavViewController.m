@@ -81,8 +81,9 @@
     bool isDetailView = false;
     if(indexPath.row == 0)
     {
-        DataCollectionViewController* dataCollector = [[DataCollectionViewController alloc] initWithNibName:@"DataCollectionViewController_iPad" bundle:nil];
+        DataCollectionViewController* dataCollector = [[DataCollectionViewController alloc] initWithNibName: @"DataCollectionViewController_iPad" bundle:nil];
         
+        [dataCollector setTitle: @"Data Collection"];
         [dataCollector setManagedObjectContext: [rootController managedObjectContext]];
         [dataCollector setSensorReader: [rootController sensorReader]];
         
