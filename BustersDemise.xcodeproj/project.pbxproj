@@ -16,9 +16,43 @@
 		074F1DDE178ED67600DF5AD2 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 074F1DDD178ED67600DF5AD2 /* Default.png */; };
 		074F1DE0178ED67600DF5AD2 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 074F1DDF178ED67600DF5AD2 /* Default@2x.png */; };
 		074F1DE2178ED67600DF5AD2 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 074F1DE1178ED67600DF5AD2 /* Default-568h@2x.png */; };
-		074F1DE5178ED67600DF5AD2 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 074F1DE4178ED67600DF5AD2 /* ViewController.m */; };
+		074F1DE5178ED67600DF5AD2 /* TabViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 074F1DE4178ED67600DF5AD2 /* TabViewController.m */; };
 		074F1DE8178ED67600DF5AD2 /* ViewController_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 074F1DE6178ED67600DF5AD2 /* ViewController_iPhone.xib */; };
-		074F1DEB178ED67600DF5AD2 /* ViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 074F1DE9178ED67600DF5AD2 /* ViewController_iPad.xib */; };
+		074F1DF3178ED85300DF5AD2 /* BDSensorReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 074F1DF2178ED85300DF5AD2 /* BDSensorReader.m */; };
+		074F1DFA178F685100DF5AD2 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 074F1DF7178F685100DF5AD2 /* CoreData.framework */; };
+		074F1DFB178F685100DF5AD2 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 074F1DF8178F685100DF5AD2 /* CoreMotion.framework */; };
+		074F1DFC178F685100DF5AD2 /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 074F1DF9178F685100DF5AD2 /* libsqlite3.0.dylib */; };
+		074F1DFF178F6B1100DF5AD2 /* SensorDataStoreModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 074F1DFD178F6B1100DF5AD2 /* SensorDataStoreModel.xcdatamodeld */; };
+		074F1E0B178F79D600DF5AD2 /* BDReportBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 074F1E0A178F79D600DF5AD2 /* BDReportBuilder.m */; };
+		074F1E0E178F7B3300DF5AD2 /* BDRunReport.m in Sources */ = {isa = PBXBuildFile; fileRef = 074F1E0D178F7B3300DF5AD2 /* BDRunReport.m */; };
+		074F1E10178F81D300DF5AD2 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 074F1E0F178F81D300DF5AD2 /* MessageUI.framework */; };
+		074F1E16178F9D4C00DF5AD2 /* SensorDataRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = 074F1E15178F9D4C00DF5AD2 /* SensorDataRecord.m */; };
+		074F1E181790E8A000DF5AD2 /* blackButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 074F1E171790E8A000DF5AD2 /* blackButton@2x.png */; };
+		074F1E1A1790E91A00DF5AD2 /* blackButtonHighlight@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 074F1E191790E91A00DF5AD2 /* blackButtonHighlight@2x.png */; };
+		074F1E1C1790F0A800DF5AD2 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 074F1E1B1790F0A800DF5AD2 /* logo.png */; };
+		074F1E221790FDC400DF5AD2 /* DataCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 074F1E201790FDC300DF5AD2 /* DataCollectionViewController.m */; };
+		074F1E231790FDC400DF5AD2 /* DataCollectionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 074F1E211790FDC400DF5AD2 /* DataCollectionViewController.xib */; };
+		074F1E271791008400DF5AD2 /* RunManagerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 074F1E251791008400DF5AD2 /* RunManagerViewController.m */; };
+		074F1E281791008400DF5AD2 /* RunManagerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 074F1E261791008400DF5AD2 /* RunManagerViewController.xib */; };
+		074F1E361791A27000DF5AD2 /* blackButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 074F1E341791A27000DF5AD2 /* blackButton.png */; };
+		074F1E371791A27000DF5AD2 /* blackButtonHighlight.png in Resources */ = {isa = PBXBuildFile; fileRef = 074F1E351791A27000DF5AD2 /* blackButtonHighlight.png */; };
+		074F1E391791B51700DF5AD2 /* hive.png in Resources */ = {isa = PBXBuildFile; fileRef = 074F1E381791B51600DF5AD2 /* hive.png */; };
+		074F1E3C1791D06900DF5AD2 /* FrequencyPickerDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 074F1E3B1791D06900DF5AD2 /* FrequencyPickerDataSource.m */; };
+		074F1E3F1791D88500DF5AD2 /* SensorRun.m in Sources */ = {isa = PBXBuildFile; fileRef = 074F1E3E1791D88400DF5AD2 /* SensorRun.m */; };
+		074F1E431791DB0900DF5AD2 /* SetInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 074F1E411791DB0800DF5AD2 /* SetInfoViewController.m */; };
+		074F1E441791DB0900DF5AD2 /* SetInfoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 074F1E421791DB0900DF5AD2 /* SetInfoViewController.xib */; };
+		074F1E481791E83A00DF5AD2 /* SetListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 074F1E461791E83900DF5AD2 /* SetListViewController.m */; };
+		074F1E491791E83A00DF5AD2 /* SetListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 074F1E471791E83A00DF5AD2 /* SetListViewController.xib */; };
+		074F1E54179207A800DF5AD2 /* record.png in Resources */ = {isa = PBXBuildFile; fileRef = 074F1E52179207A800DF5AD2 /* record.png */; };
+		074F1E55179207A800DF5AD2 /* sets.png in Resources */ = {isa = PBXBuildFile; fileRef = 074F1E53179207A800DF5AD2 /* sets.png */; };
+		074F1E5B1792255800DF5AD2 /* iPadViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 074F1E591792255600DF5AD2 /* iPadViewController.m */; };
+		074F1E5C1792255800DF5AD2 /* iPadViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 074F1E5A1792255700DF5AD2 /* iPadViewController.xib */; };
+		074F1E651792268000DF5AD2 /* AnalyticsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 074F1E631792267F00DF5AD2 /* AnalyticsViewController.m */; };
+		074F1E661792268000DF5AD2 /* AnalyticsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 074F1E641792267F00DF5AD2 /* AnalyticsViewController.xib */; };
+		074F1E6E1792298300DF5AD2 /* DataCollectionViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 074F1E6D1792298300DF5AD2 /* DataCollectionViewController_iPad.xib */; };
+		074F1E701792303800DF5AD2 /* SetInfoViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 074F1E6F1792303800DF5AD2 /* SetInfoViewController_iPad.xib */; };
+		074F1E741792335200DF5AD2 /* iPadNavViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 074F1E721792335000DF5AD2 /* iPadNavViewController.m */; };
+		074F1E751792335200DF5AD2 /* iPadNavViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 074F1E731792335000DF5AD2 /* iPadNavViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,10 +69,57 @@
 		074F1DDD178ED67600DF5AD2 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		074F1DDF178ED67600DF5AD2 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		074F1DE1178ED67600DF5AD2 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
-		074F1DE3178ED67600DF5AD2 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		074F1DE4178ED67600DF5AD2 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		074F1DE3178ED67600DF5AD2 /* TabViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TabViewController.h; sourceTree = "<group>"; };
+		074F1DE4178ED67600DF5AD2 /* TabViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TabViewController.m; sourceTree = "<group>"; };
 		074F1DE7178ED67600DF5AD2 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ViewController_iPhone.xib; sourceTree = "<group>"; };
-		074F1DEA178ED67600DF5AD2 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ViewController_iPad.xib; sourceTree = "<group>"; };
+		074F1DF1178ED85300DF5AD2 /* BDSensorReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BDSensorReader.h; sourceTree = "<group>"; };
+		074F1DF2178ED85300DF5AD2 /* BDSensorReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BDSensorReader.m; sourceTree = "<group>"; };
+		074F1DF7178F685100DF5AD2 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		074F1DF8178F685100DF5AD2 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
+		074F1DF9178F685100DF5AD2 /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
+		074F1DFE178F6B1100DF5AD2 /* SensorDataStoreModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SensorDataStoreModel.xcdatamodel; sourceTree = "<group>"; };
+		074F1E09178F79D600DF5AD2 /* BDReportBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BDReportBuilder.h; sourceTree = "<group>"; };
+		074F1E0A178F79D600DF5AD2 /* BDReportBuilder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BDReportBuilder.m; sourceTree = "<group>"; };
+		074F1E0C178F7B3300DF5AD2 /* BDRunReport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BDRunReport.h; sourceTree = "<group>"; };
+		074F1E0D178F7B3300DF5AD2 /* BDRunReport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BDRunReport.m; sourceTree = "<group>"; };
+		074F1E0F178F81D300DF5AD2 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		074F1E14178F9D4C00DF5AD2 /* SensorDataRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SensorDataRecord.h; sourceTree = "<group>"; };
+		074F1E15178F9D4C00DF5AD2 /* SensorDataRecord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SensorDataRecord.m; sourceTree = "<group>"; };
+		074F1E171790E8A000DF5AD2 /* blackButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "blackButton@2x.png"; path = "../../../../Downloads/iOS Buttons/buttons/blackButton@2x.png"; sourceTree = "<group>"; };
+		074F1E191790E91A00DF5AD2 /* blackButtonHighlight@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "blackButtonHighlight@2x.png"; sourceTree = "<group>"; };
+		074F1E1B1790F0A800DF5AD2 /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
+		074F1E1F1790FDC300DF5AD2 /* DataCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataCollectionViewController.h; sourceTree = "<group>"; };
+		074F1E201790FDC300DF5AD2 /* DataCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataCollectionViewController.m; sourceTree = "<group>"; };
+		074F1E211790FDC400DF5AD2 /* DataCollectionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DataCollectionViewController.xib; sourceTree = "<group>"; };
+		074F1E241791008400DF5AD2 /* RunManagerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RunManagerViewController.h; sourceTree = "<group>"; };
+		074F1E251791008400DF5AD2 /* RunManagerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RunManagerViewController.m; sourceTree = "<group>"; };
+		074F1E261791008400DF5AD2 /* RunManagerViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RunManagerViewController.xib; sourceTree = "<group>"; };
+		074F1E341791A27000DF5AD2 /* blackButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blackButton.png; sourceTree = "<group>"; };
+		074F1E351791A27000DF5AD2 /* blackButtonHighlight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blackButtonHighlight.png; sourceTree = "<group>"; };
+		074F1E381791B51600DF5AD2 /* hive.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hive.png; sourceTree = "<group>"; };
+		074F1E3A1791D06800DF5AD2 /* FrequencyPickerDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FrequencyPickerDataSource.h; sourceTree = "<group>"; };
+		074F1E3B1791D06900DF5AD2 /* FrequencyPickerDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FrequencyPickerDataSource.m; sourceTree = "<group>"; };
+		074F1E3D1791D88400DF5AD2 /* SensorRun.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SensorRun.h; sourceTree = "<group>"; };
+		074F1E3E1791D88400DF5AD2 /* SensorRun.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SensorRun.m; sourceTree = "<group>"; };
+		074F1E401791DB0800DF5AD2 /* SetInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetInfoViewController.h; sourceTree = "<group>"; };
+		074F1E411791DB0800DF5AD2 /* SetInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SetInfoViewController.m; sourceTree = "<group>"; };
+		074F1E421791DB0900DF5AD2 /* SetInfoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SetInfoViewController.xib; sourceTree = "<group>"; };
+		074F1E451791E83900DF5AD2 /* SetListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetListViewController.h; sourceTree = "<group>"; };
+		074F1E461791E83900DF5AD2 /* SetListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SetListViewController.m; sourceTree = "<group>"; };
+		074F1E471791E83A00DF5AD2 /* SetListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SetListViewController.xib; sourceTree = "<group>"; };
+		074F1E52179207A800DF5AD2 /* record.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = record.png; sourceTree = "<group>"; };
+		074F1E53179207A800DF5AD2 /* sets.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sets.png; sourceTree = "<group>"; };
+		074F1E581792255500DF5AD2 /* iPadViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iPadViewController.h; sourceTree = "<group>"; };
+		074F1E591792255600DF5AD2 /* iPadViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iPadViewController.m; sourceTree = "<group>"; };
+		074F1E5A1792255700DF5AD2 /* iPadViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = iPadViewController.xib; sourceTree = "<group>"; };
+		074F1E621792267F00DF5AD2 /* AnalyticsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AnalyticsViewController.h; sourceTree = "<group>"; };
+		074F1E631792267F00DF5AD2 /* AnalyticsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AnalyticsViewController.m; sourceTree = "<group>"; };
+		074F1E641792267F00DF5AD2 /* AnalyticsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AnalyticsViewController.xib; sourceTree = "<group>"; };
+		074F1E6D1792298300DF5AD2 /* DataCollectionViewController_iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DataCollectionViewController_iPad.xib; sourceTree = "<group>"; };
+		074F1E6F1792303800DF5AD2 /* SetInfoViewController_iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SetInfoViewController_iPad.xib; sourceTree = "<group>"; };
+		074F1E711792335000DF5AD2 /* iPadNavViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iPadNavViewController.h; sourceTree = "<group>"; };
+		074F1E721792335000DF5AD2 /* iPadNavViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iPadNavViewController.m; sourceTree = "<group>"; };
+		074F1E731792335000DF5AD2 /* iPadNavViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = iPadNavViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -46,6 +127,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				074F1E10178F81D300DF5AD2 /* MessageUI.framework in Frameworks */,
+				074F1DFA178F685100DF5AD2 /* CoreData.framework in Frameworks */,
+				074F1DFB178F685100DF5AD2 /* CoreMotion.framework in Frameworks */,
+				074F1DFC178F685100DF5AD2 /* libsqlite3.0.dylib in Frameworks */,
 				074F1DCC178ED67600DF5AD2 /* UIKit.framework in Frameworks */,
 				074F1DCE178ED67600DF5AD2 /* Foundation.framework in Frameworks */,
 				074F1DD0178ED67600DF5AD2 /* CoreGraphics.framework in Frameworks */,
@@ -58,6 +143,11 @@
 		074F1DBF178ED67600DF5AD2 = {
 			isa = PBXGroup;
 			children = (
+				074F1E0F178F81D300DF5AD2 /* MessageUI.framework */,
+				074F1DFD178F6B1100DF5AD2 /* SensorDataStoreModel.xcdatamodeld */,
+				074F1DF7178F685100DF5AD2 /* CoreData.framework */,
+				074F1DF8178F685100DF5AD2 /* CoreMotion.framework */,
+				074F1DF9178F685100DF5AD2 /* libsqlite3.0.dylib */,
 				074F1DD1178ED67600DF5AD2 /* BustersDemise */,
 				074F1DCA178ED67600DF5AD2 /* Frameworks */,
 				074F1DC9178ED67600DF5AD2 /* Products */,
@@ -85,12 +175,12 @@
 		074F1DD1178ED67600DF5AD2 /* BustersDemise */ = {
 			isa = PBXGroup;
 			children = (
+				074F1E6C1792295200DF5AD2 /* CommonUI */,
+				074F1E6A1792275200DF5AD2 /* Common */,
+				074F1E681792272600DF5AD2 /* iPad */,
+				074F1E67179226B000DF5AD2 /* iPhone */,
 				074F1DDA178ED67600DF5AD2 /* AppDelegate.h */,
 				074F1DDB178ED67600DF5AD2 /* AppDelegate.m */,
-				074F1DE3178ED67600DF5AD2 /* ViewController.h */,
-				074F1DE4178ED67600DF5AD2 /* ViewController.m */,
-				074F1DE6178ED67600DF5AD2 /* ViewController_iPhone.xib */,
-				074F1DE9178ED67600DF5AD2 /* ViewController_iPad.xib */,
 				074F1DD2178ED67600DF5AD2 /* Supporting Files */,
 			);
 			path = BustersDemise;
@@ -99,6 +189,14 @@
 		074F1DD2178ED67600DF5AD2 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				074F1E52179207A800DF5AD2 /* record.png */,
+				074F1E53179207A800DF5AD2 /* sets.png */,
+				074F1E381791B51600DF5AD2 /* hive.png */,
+				074F1E341791A27000DF5AD2 /* blackButton.png */,
+				074F1E351791A27000DF5AD2 /* blackButtonHighlight.png */,
+				074F1E1B1790F0A800DF5AD2 /* logo.png */,
+				074F1E191790E91A00DF5AD2 /* blackButtonHighlight@2x.png */,
+				074F1E171790E8A000DF5AD2 /* blackButton@2x.png */,
 				074F1DD3178ED67600DF5AD2 /* BustersDemise-Info.plist */,
 				074F1DD4178ED67600DF5AD2 /* InfoPlist.strings */,
 				074F1DD7178ED67600DF5AD2 /* main.m */,
@@ -108,6 +206,88 @@
 				074F1DE1178ED67600DF5AD2 /* Default-568h@2x.png */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		074F1E67179226B000DF5AD2 /* iPhone */ = {
+			isa = PBXGroup;
+			children = (
+				074F1E241791008400DF5AD2 /* RunManagerViewController.h */,
+				074F1E251791008400DF5AD2 /* RunManagerViewController.m */,
+				074F1E261791008400DF5AD2 /* RunManagerViewController.xib */,
+				074F1DE3178ED67600DF5AD2 /* TabViewController.h */,
+				074F1DE4178ED67600DF5AD2 /* TabViewController.m */,
+				074F1DE6178ED67600DF5AD2 /* ViewController_iPhone.xib */,
+			);
+			name = iPhone;
+			sourceTree = "<group>";
+		};
+		074F1E681792272600DF5AD2 /* iPad */ = {
+			isa = PBXGroup;
+			children = (
+				074F1E691792273700DF5AD2 /* Analytics */,
+				074F1E581792255500DF5AD2 /* iPadViewController.h */,
+				074F1E591792255600DF5AD2 /* iPadViewController.m */,
+				074F1E5A1792255700DF5AD2 /* iPadViewController.xib */,
+				074F1E711792335000DF5AD2 /* iPadNavViewController.h */,
+				074F1E721792335000DF5AD2 /* iPadNavViewController.m */,
+				074F1E731792335000DF5AD2 /* iPadNavViewController.xib */,
+			);
+			name = iPad;
+			sourceTree = "<group>";
+		};
+		074F1E691792273700DF5AD2 /* Analytics */ = {
+			isa = PBXGroup;
+			children = (
+				074F1E621792267F00DF5AD2 /* AnalyticsViewController.h */,
+				074F1E631792267F00DF5AD2 /* AnalyticsViewController.m */,
+				074F1E641792267F00DF5AD2 /* AnalyticsViewController.xib */,
+			);
+			name = Analytics;
+			sourceTree = "<group>";
+		};
+		074F1E6A1792275200DF5AD2 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				074F1E14178F9D4C00DF5AD2 /* SensorDataRecord.h */,
+				074F1E15178F9D4C00DF5AD2 /* SensorDataRecord.m */,
+				074F1E3A1791D06800DF5AD2 /* FrequencyPickerDataSource.h */,
+				074F1E3B1791D06900DF5AD2 /* FrequencyPickerDataSource.m */,
+				074F1E3D1791D88400DF5AD2 /* SensorRun.h */,
+				074F1E3E1791D88400DF5AD2 /* SensorRun.m */,
+				074F1E6B1792275A00DF5AD2 /* Sensors */,
+			);
+			name = Common;
+			sourceTree = "<group>";
+		};
+		074F1E6B1792275A00DF5AD2 /* Sensors */ = {
+			isa = PBXGroup;
+			children = (
+				074F1DF1178ED85300DF5AD2 /* BDSensorReader.h */,
+				074F1DF2178ED85300DF5AD2 /* BDSensorReader.m */,
+				074F1E09178F79D600DF5AD2 /* BDReportBuilder.h */,
+				074F1E0A178F79D600DF5AD2 /* BDReportBuilder.m */,
+				074F1E0C178F7B3300DF5AD2 /* BDRunReport.h */,
+				074F1E0D178F7B3300DF5AD2 /* BDRunReport.m */,
+			);
+			name = Sensors;
+			sourceTree = "<group>";
+		};
+		074F1E6C1792295200DF5AD2 /* CommonUI */ = {
+			isa = PBXGroup;
+			children = (
+				074F1E1F1790FDC300DF5AD2 /* DataCollectionViewController.h */,
+				074F1E201790FDC300DF5AD2 /* DataCollectionViewController.m */,
+				074F1E211790FDC400DF5AD2 /* DataCollectionViewController.xib */,
+				074F1E6D1792298300DF5AD2 /* DataCollectionViewController_iPad.xib */,
+				074F1E401791DB0800DF5AD2 /* SetInfoViewController.h */,
+				074F1E411791DB0800DF5AD2 /* SetInfoViewController.m */,
+				074F1E421791DB0900DF5AD2 /* SetInfoViewController.xib */,
+				074F1E6F1792303800DF5AD2 /* SetInfoViewController_iPad.xib */,
+				074F1E451791E83900DF5AD2 /* SetListViewController.h */,
+				074F1E461791E83900DF5AD2 /* SetListViewController.m */,
+				074F1E471791E83A00DF5AD2 /* SetListViewController.xib */,
+			);
+			name = CommonUI;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -166,7 +346,23 @@
 				074F1DE0178ED67600DF5AD2 /* Default@2x.png in Resources */,
 				074F1DE2178ED67600DF5AD2 /* Default-568h@2x.png in Resources */,
 				074F1DE8178ED67600DF5AD2 /* ViewController_iPhone.xib in Resources */,
-				074F1DEB178ED67600DF5AD2 /* ViewController_iPad.xib in Resources */,
+				074F1E181790E8A000DF5AD2 /* blackButton@2x.png in Resources */,
+				074F1E1A1790E91A00DF5AD2 /* blackButtonHighlight@2x.png in Resources */,
+				074F1E1C1790F0A800DF5AD2 /* logo.png in Resources */,
+				074F1E231790FDC400DF5AD2 /* DataCollectionViewController.xib in Resources */,
+				074F1E281791008400DF5AD2 /* RunManagerViewController.xib in Resources */,
+				074F1E361791A27000DF5AD2 /* blackButton.png in Resources */,
+				074F1E371791A27000DF5AD2 /* blackButtonHighlight.png in Resources */,
+				074F1E391791B51700DF5AD2 /* hive.png in Resources */,
+				074F1E441791DB0900DF5AD2 /* SetInfoViewController.xib in Resources */,
+				074F1E491791E83A00DF5AD2 /* SetListViewController.xib in Resources */,
+				074F1E54179207A800DF5AD2 /* record.png in Resources */,
+				074F1E55179207A800DF5AD2 /* sets.png in Resources */,
+				074F1E5C1792255800DF5AD2 /* iPadViewController.xib in Resources */,
+				074F1E661792268000DF5AD2 /* AnalyticsViewController.xib in Resources */,
+				074F1E6E1792298300DF5AD2 /* DataCollectionViewController_iPad.xib in Resources */,
+				074F1E701792303800DF5AD2 /* SetInfoViewController_iPad.xib in Resources */,
+				074F1E751792335200DF5AD2 /* iPadNavViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -179,7 +375,21 @@
 			files = (
 				074F1DD8178ED67600DF5AD2 /* main.m in Sources */,
 				074F1DDC178ED67600DF5AD2 /* AppDelegate.m in Sources */,
-				074F1DE5178ED67600DF5AD2 /* ViewController.m in Sources */,
+				074F1DE5178ED67600DF5AD2 /* TabViewController.m in Sources */,
+				074F1DF3178ED85300DF5AD2 /* BDSensorReader.m in Sources */,
+				074F1DFF178F6B1100DF5AD2 /* SensorDataStoreModel.xcdatamodeld in Sources */,
+				074F1E0B178F79D600DF5AD2 /* BDReportBuilder.m in Sources */,
+				074F1E0E178F7B3300DF5AD2 /* BDRunReport.m in Sources */,
+				074F1E16178F9D4C00DF5AD2 /* SensorDataRecord.m in Sources */,
+				074F1E221790FDC400DF5AD2 /* DataCollectionViewController.m in Sources */,
+				074F1E271791008400DF5AD2 /* RunManagerViewController.m in Sources */,
+				074F1E3C1791D06900DF5AD2 /* FrequencyPickerDataSource.m in Sources */,
+				074F1E3F1791D88500DF5AD2 /* SensorRun.m in Sources */,
+				074F1E431791DB0900DF5AD2 /* SetInfoViewController.m in Sources */,
+				074F1E481791E83A00DF5AD2 /* SetListViewController.m in Sources */,
+				074F1E5B1792255800DF5AD2 /* iPadViewController.m in Sources */,
+				074F1E651792268000DF5AD2 /* AnalyticsViewController.m in Sources */,
+				074F1E741792335200DF5AD2 /* iPadNavViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -200,14 +410,6 @@
 				074F1DE7178ED67600DF5AD2 /* en */,
 			);
 			name = ViewController_iPhone.xib;
-			sourceTree = "<group>";
-		};
-		074F1DE9178ED67600DF5AD2 /* ViewController_iPad.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				074F1DEA178ED67600DF5AD2 /* en */,
-			);
-			name = ViewController_iPad.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -312,8 +514,23 @@
 				074F1DF0178ED67600DF5AD2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		074F1DFD178F6B1100DF5AD2 /* SensorDataStoreModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				074F1DFE178F6B1100DF5AD2 /* SensorDataStoreModel.xcdatamodel */,
+			);
+			currentVersion = 074F1DFE178F6B1100DF5AD2 /* SensorDataStoreModel.xcdatamodel */;
+			name = SensorDataStoreModel.xcdatamodeld;
+			path = BustersDemise/SensorDataStoreModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 074F1DC0178ED67600DF5AD2 /* Project object */;
 }
