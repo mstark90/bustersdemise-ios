@@ -11,6 +11,8 @@
 #import "SensorRun.h"
 #import "SetInfoViewController.h"
 #import "iPadViewController.h"
+#import "MBProgressHUD.h"
+#import "BDEmailHelper.h"
 
 @interface SetListViewController ()
 
@@ -29,6 +31,16 @@
     return self;
 }
 
+- (void) dealloc
+{
+    if(_currentData != nil)
+    {
+        [_currentData release];
+    }
+    [self.managedObjectContext release];
+    [super dealloc];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -37,10 +49,10 @@
     _refreshButton = [[UIBarButtonItem alloc] initWithTitle:@"Refresh" style:UIBarButtonItemStyleBordered target:self action:@selector(refreshButtonClicked:)];
     
     [_editButton setTintColor: [UIColor blueColor]];
-    
+
     NSFetchRequest * fetch = [[NSFetchRequest alloc] init];
-    [fetch setEntity:[NSEntityDescription entityForName:@"SensorRun" inManagedObjectContext:[self managedObjectContext]]];
-    NSArray* result = [[self managedObjectContext] executeFetchRequest:fetch error:nil];
+    [fetch setEntity:[NSEntityDescription entityForName:@"SensorRun" inManagedObjectContext: self.managedObjectContext]];
+    NSArray* result = [self.managedObjectContext executeFetchRequest:fetch error:nil];
     
     if([result count] == 0)
     {
@@ -49,6 +61,8 @@
         [self.exportAllButtonItem setEnabled: NO];
         [self.exportButtonItem setEnabled: NO];
     }
+    
+    [fetch release];
     
     [[self navigationItem] setRightBarButtonItem: _refreshButton];
     if(UI_USER_INTERFACE_IDIOM() != UIUserInterfaceIdiomPad)
@@ -80,28 +94,32 @@
     }
     else
     {
-        [[self managedObjectContext] save: nil];
+        [self.managedObjectContext save: nil];
         [self.runTable setEditing:NO animated:YES];
         [_editButton setTitle:@"Edit"];
         [_editButton setTintColor: [UIColor blueColor]];
+        [self updateButtonConstraints];
     }
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        
         NSMutableArray* tmpArray = [NSMutableArray arrayWithArray: _currentData];
-        
-        SensorRun* run = [_currentData objectAtIndex: indexPath.row];
-        
+
         [tableView beginUpdates];
         [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath]
                          withRowAnimation:UITableViewRowAnimationFade];
         [tmpArray removeObjectAtIndex: indexPath.row];
+        [_currentData release];
+        _currentData = nil;
         _currentData = [NSArray arrayWithArray: tmpArray];
         [tableView endUpdates];
-        [[self managedObjectContext] deleteObject: run];
+        NSFetchRequest * fetch = [[NSFetchRequest alloc] init];
+        [fetch setEntity:[NSEntityDescription entityForName:@"SensorRun" inManagedObjectContext: self.managedObjectContext]];
+        NSArray* result = [self.managedObjectContext executeFetchRequest:fetch error:nil];
+        [self.managedObjectContext deleteObject: [result objectAtIndex: indexPath.row]];
+        [_currentData retain];
     }
 }
 
@@ -112,37 +130,62 @@
 - (IBAction)exportButtonClicked:(UIBarButtonItem *)sender {
     if(_isMultiExportEnabled)
     {
-        MFMailComposeViewController* controller = [[MFMailComposeViewController alloc] init];
-        controller.mailComposeDelegate = self;
-        [controller setSubject:@"Buster's Demise Output Data"];
         NSFetchRequest * fetch = [[NSFetchRequest alloc] init];
-        [fetch setEntity:[NSEntityDescription entityForName:@"SensorRun" inManagedObjectContext:[self managedObjectContext]]];
+        [fetch setEntity:[NSEntityDescription entityForName:@"SensorRun" inManagedObjectContext: self.managedObjectContext]];
         NSArray* indexPaths = [self.runTable indexPathsForSelectedRows];
-        NSArray* result = [[self managedObjectContext] executeFetchRequest:fetch error:nil];
-        for (NSIndexPath* indexPath in indexPaths)
+        if([indexPaths count] > 0)
         {
-            SensorRun* run = [result objectAtIndex:[indexPath row]];
-            [controller addAttachmentData:[[BDReportBuilder createReport: run] dataUsingEncoding:NSUTF8StringEncoding] mimeType:@"text/plain" fileName:[NSString stringWithFormat:@"%@.csv", [run dataSetName]]];
-        }
-        [controller setMessageBody:@"Attached to this e-mail are all the selected runs of Buster's Demise." isHTML:NO];
-        if (controller)
-        {
-            [self presentViewController:controller animated:YES completion:^(void)
-             {
-                 
-             }];
+            NSArray* result = [self.managedObjectContext executeFetchRequest:fetch error:nil];
+            NSMutableDictionary* generatedReports = [[NSMutableDictionary alloc] init];
+            if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
+            {
+                [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+            }
+            else
+            {
+                [MBProgressHUD showHUDAddedTo:self.splitViewController.view animated:YES];
+            }
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^(void)
+               {
+                   [indexPaths retain];
+                   for (NSIndexPath* indexPath in indexPaths)
+                   {
+                       SensorRun* sensorRunInfo = [result objectAtIndex:[indexPath row]];
+                       BDSensorRun* run = [NSKeyedUnarchiver unarchiveObjectWithFile: [sensorRunInfo dataFileName]];
+                       [generatedReports setValue:[[BDReportBuilder createReport: run] dataUsingEncoding:NSUTF8StringEncoding] forKey:[NSString stringWithFormat:@"%@.csv", [run dataSetName]]];
+                   }
+                   [indexPaths release];
+                   [fetch release];
+                   dispatch_async(dispatch_get_main_queue(), ^(void)
+                      {
+                          if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
+                          {
+                              [MBProgressHUD hideHUDForView:self.view animated:YES];
+                              [BDEmailHelper sendEmail:self emailSubject:@"Buster's Demise Output Data" emailText:@"Attached to this e-mail are the selected data sets from Buster's Demise." reports:generatedReports viewController:self];
+                          }
+                          else
+                          {
+                              [MBProgressHUD hideHUDForView:self.splitViewController.view animated:YES];
+                              [BDEmailHelper sendEmail:self emailSubject:@"Buster's Demise Output Data" emailText:@"Attached to this e-mail are the selected data sets from Buster's Demise." reports:generatedReports viewController:self.splitViewController];
+                          }
+                      });
+               });
             for (NSIndexPath* indexPath in indexPaths)
             {
                 [self.runTable deselectRowAtIndexPath:indexPath animated:NO];
             }
         }
-        [self.runTable setAllowsSelection:NO];
+        else
+        {
+            UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:@"Error" message:@"No data sets were selected for export." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+            [alertView show];
+        }
+        [indexPaths release];
         [self.runTable setAllowsMultipleSelection: NO];
         _isMultiExportEnabled = false;
     }
     else
     {
-        [self.runTable setAllowsSelection:YES];
         [self.runTable setAllowsMultipleSelection: YES];
         _isMultiExportEnabled = true;
     }
@@ -208,10 +251,9 @@
         }
         else
         {
-            iPadViewController * parentController = (iPadViewController*)[self parentViewController];
             UIViewController *navigationViewController = [self.splitViewController.viewControllers objectAtIndex:0];
             NSArray *viewControllers = [[NSArray alloc] initWithObjects:navigationViewController, setInfo, nil];
-            parentController.viewControllers = viewControllers;
+            self.splitViewController.viewControllers = viewControllers;
 
         }
         [self.runTable deselectRowAtIndexPath:indexPath animated:NO];
@@ -220,15 +262,15 @@
 
 - (IBAction)clearStorageClick:(UIBarButtonItem *)sender {
     NSFetchRequest * fetch = [[NSFetchRequest alloc] init];
-    [fetch setEntity:[NSEntityDescription entityForName:@"SensorDataRecord" inManagedObjectContext:[self managedObjectContext]]];
-    NSArray * result = [[self managedObjectContext] executeFetchRequest:fetch error:nil];
-    for (id basket in result)
-        [[self managedObjectContext] deleteObject:basket];
-    [fetch setEntity:[NSEntityDescription entityForName:@"SensorRun" inManagedObjectContext:[self managedObjectContext]]];
-    result = [[self managedObjectContext] executeFetchRequest:fetch error:nil];
-    for (id basket in result)
-        [[self managedObjectContext] deleteObject:basket];
-    [[self managedObjectContext] save: nil];
+    [fetch setEntity:[NSEntityDescription entityForName:@"SensorRun" inManagedObjectContext: self.managedObjectContext]];
+    NSArray * result = [self.managedObjectContext executeFetchRequest:fetch error:nil];
+    for (SensorRun* basket in result)
+    {
+        [[NSFileManager defaultManager] removeItemAtPath:[basket dataFileName] error:nil];
+        [self.managedObjectContext deleteObject:basket];
+    }
+    [fetch release];
+    [self.managedObjectContext save: nil];
     [self.clearAllButtonItem setEnabled:NO];
     [self.exportButtonItem setEnabled:NO];
     [self.exportAllButtonItem setEnabled: NO];
@@ -238,31 +280,46 @@
 }
 
 - (IBAction)exportAllClick:(UIBarButtonItem *)sender {
-    MFMailComposeViewController* controller = [[MFMailComposeViewController alloc] init];
-    controller.mailComposeDelegate = self;
-    [controller setSubject:@"Buster's Demise Output Data"];
-    NSFetchRequest * fetch = [[NSFetchRequest alloc] init];
-    [fetch setEntity:[NSEntityDescription entityForName:@"SensorRun" inManagedObjectContext:[self managedObjectContext]]];
-    NSArray* result = [[self managedObjectContext] executeFetchRequest:fetch error:nil];
-    for (SensorRun* run in result)
+    NSMutableDictionary* generatedReports = [[NSMutableDictionary alloc] init];
+    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
     {
-        [controller addAttachmentData:[[BDReportBuilder createReport: run] dataUsingEncoding:NSUTF8StringEncoding] mimeType:@"text/plain" fileName:[NSString stringWithFormat:@"%@.csv", [run dataSetName]]];
+        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     }
-    [controller setMessageBody:@"Attached to this e-mail are all the stored runs of Buster's Demise." isHTML:NO];
-    if (controller)
-        [self presentViewController:controller animated:YES completion:^(void)
-         {
-             
-         }];
+    else
+    {
+        [MBProgressHUD showHUDAddedTo:self.splitViewController.view animated:YES];
+    }
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^(void)
+       {
+           for (SensorRun* sensorRunInfo in _currentData)
+           {
+               BDSensorRun* run = [NSKeyedUnarchiver unarchiveObjectWithFile: [sensorRunInfo dataFileName]];
+               [generatedReports setValue:[[BDReportBuilder createReport: run] dataUsingEncoding:NSUTF8StringEncoding] forKey:[NSString stringWithFormat:@"%@.csv", [run dataSetName]]];
+           }
+           dispatch_async(dispatch_get_main_queue(), ^(void)
+              {
+                  if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
+                  {
+                      [MBProgressHUD hideHUDForView:self.view animated:YES];
+                      [BDEmailHelper sendEmail:self emailSubject:@"Buster's Demise Output Data" emailText:@"Attached to this e-mail are the selected data sets from Buster's Demise." reports:generatedReports viewController:self];
+                  }
+                  else
+                  {
+                      [MBProgressHUD hideHUDForView:self.splitViewController.view animated:YES];
+                      [BDEmailHelper sendEmail:self emailSubject:@"Buster's Demise Output Data" emailText:@"Attached to this e-mail are the selected data sets from Buster's Demise." reports:generatedReports viewController:self.splitViewController];
+                  }
+                  [generatedReports release];
+              });
+       });
 }
 
 -(void) updateButtonConstraints
 {
-    if([self managedObjectContext] != nil)
+    if(self.managedObjectContext != nil)
     {
         NSFetchRequest * fetch = [[NSFetchRequest alloc] init];
-        [fetch setEntity:[NSEntityDescription entityForName:@"SensorRun" inManagedObjectContext:[self managedObjectContext]]];
-        NSArray* result = [[self managedObjectContext] executeFetchRequest:fetch error:nil];
+        [fetch setEntity:[NSEntityDescription entityForName:@"SensorRun" inManagedObjectContext: self.managedObjectContext]];
+        NSArray* result = [self.managedObjectContext executeFetchRequest:fetch error:nil];
         if([result count] > 0)
         {
             _isDataButtonsEnabled = YES;
@@ -271,6 +328,8 @@
         {
             _isDataButtonsEnabled = NO;
         }
+        [fetch release];
+        fetch = nil;
     }
     else
     {
@@ -280,15 +339,49 @@
     [self.exportButtonItem setEnabled:_isDataButtonsEnabled];
     [self.exportAllButtonItem setEnabled: _isDataButtonsEnabled];
     [_editButton setEnabled: _isDataButtonsEnabled];
-    [_refreshButton setEnabled: _isDataButtonsEnabled];
 }
 
 -(void)reloadData
 {
-    NSFetchRequest * fetch = [[NSFetchRequest alloc] init];
-    [fetch setEntity:[NSEntityDescription entityForName:@"SensorRun" inManagedObjectContext:[self managedObjectContext]]];
-    _currentData = [[self managedObjectContext] executeFetchRequest:fetch error:nil];
-    [self.runTable reloadData];
+    MBProgressHUD* loadingHud = [[MBProgressHUD alloc] initWithView:self.view];
+    [loadingHud setLabelText:@"Loading..."];
+    [self.view addSubview: loadingHud];
+    [loadingHud showUsingAnimation:YES];
+    
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^(void)
+       {
+           NSMutableArray* currentData = [[NSMutableArray alloc] init];
+           NSError* error = nil;
+           if(_currentData != nil)
+           {
+               [_currentData release];
+               _currentData = nil;
+           }
+           NSFetchRequest * fetch = [[NSFetchRequest alloc] init];
+           [fetch setEntity:[NSEntityDescription entityForName:@"SensorRun" inManagedObjectContext: self.managedObjectContext]];
+           
+           NSArray* result = [self.managedObjectContext executeFetchRequest:fetch error: &error];
+           if(error != nil)
+           {
+               NSLog(@"%@", error);
+           }
+           else
+           {
+               for(int i = 0; i < [result count]; i++)
+               {
+                   SensorRun* sensorRun = [result objectAtIndex: i];
+                   [currentData addObject: sensorRun];
+               }
+           }
+           _currentData = currentData;
+           [fetch release];
+           dispatch_async(dispatch_get_main_queue(), ^(void)
+              {
+                  [MBProgressHUD hideHUDForView:self.view animated:YES];
+                  [self.runTable reloadData];
+              });
+       });
+    
 }
 
 @end

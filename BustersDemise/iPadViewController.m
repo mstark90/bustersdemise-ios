@@ -26,6 +26,15 @@
     return self;
 }
 
+-(void) dealloc
+{
+    if(self.managedObjectContext != nil)
+    {
+        [self.managedObjectContext release];
+    }
+    [super dealloc];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];

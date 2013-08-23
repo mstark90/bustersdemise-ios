@@ -24,7 +24,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self.view setBackgroundColor: [UIColor colorWithPatternImage: [UIImage imageNamed:@"hive.png"]]];
     self.delegate = self;
 }
 

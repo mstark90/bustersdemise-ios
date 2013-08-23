@@ -14,7 +14,6 @@
 
 @interface DataCollectionViewController : UIViewController<UITextFieldDelegate>
 {
-    NSManagedObjectContext* _managedObjectContext;
     UIActionSheet* _pickerActionSheet;
     FrequencyPickerDataSource* _frequencyDataSource;
 }
@@ -26,12 +25,10 @@
 @property(retain, nonatomic) IBOutlet UIButton* startRecordButton;
 @property(retain, nonatomic) IBOutlet UIButton* stopRecordButton;
 @property(retain, nonatomic) IBOutlet UIPickerView* frequencyPicker;
+@property(retain, atomic) NSManagedObjectContext* managedObjectContext;
 
 @property(retain, nonatomic) BDSensorReader* sensorReader;
 
 -(void) onFrequencyPickerCancelled: (id)sender;
-
--(void) setManagedObjectContext:(NSManagedObjectContext *)managedObjectContext;
--(NSManagedObjectContext*) getManagedObjectContext;
 
 @end

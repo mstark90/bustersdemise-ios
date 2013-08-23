@@ -44,25 +44,14 @@
                               initWithString: [docsDir stringByAppendingPathComponent:
                                                @"contacts.db"]];
     
-    NSFileManager *filemgr = [NSFileManager defaultManager];
-    
-    if ([filemgr fileExistsAtPath: databasePath ] == NO)
-    {
-        const char *dbpath = [databasePath UTF8String];
-        
-        sqlite3* dataDB = NULL;
-        
-        if (sqlite3_open(dbpath, &dataDB) == SQLITE_OK)
-        {
-            sqlite3_close(dataDB);
-        }
-    }
-    
     [persistentStoreCoordination addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:[NSURL fileURLWithPath:databasePath] options:nil error:nil];
     
-    NSManagedObjectContext *context = [[NSManagedObjectContext alloc] init];
+    NSManagedObjectContext* objectContext = [[NSManagedObjectContext alloc] init];
+    [objectContext setPersistentStoreCoordinator: persistentStoreCoordination];
     
-    [context setPersistentStoreCoordinator:persistentStoreCoordination];
+    [self setSensorReader: [[BDSensorReader alloc] init]];
+    [self.sensorReader setManagedObjectContext:objectContext];
+    [self.sensorReader setOutputDirectory: docsDir];
     
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
         TabViewController* tabViewController = [[TabViewController alloc] initWithNibName:@"ViewController_iPhone" bundle:nil];
@@ -75,12 +64,8 @@
         
         [dataCollection setTabBarItem: dataCollectionTab];
         [dataCollection setTitle:@"Data Collection"];
-        
-        [self setSensorReader: [[BDSensorReader alloc] init]];
-        [self.sensorReader setManagedObjectContext:context];
-        
         [dataCollection setSensorReader: [self sensorReader]];
-        [dataCollection setManagedObjectContext: context];
+        [dataCollection setManagedObjectContext:objectContext];
         
         [assetBrowserControllers addObject: dataCollection];
         
@@ -93,7 +78,7 @@
         
         SetListViewController* listController = [[SetListViewController alloc] initWithNibName:@"SetListViewController" bundle:nil];
         
-        [listController setManagedObjectContext: context];
+        [listController setManagedObjectContext:objectContext];
         [listController setTitle:@"Data Sets"];
         
         [runManager pushViewController:listController animated:NO];
@@ -106,8 +91,8 @@
     } else {
         iPadViewController* iPadController = [[iPadViewController alloc] initWithNibName:@"iPadViewController" bundle:nil];
         
-        [iPadController setManagedObjectContext: context];
-        [iPadController setSensorReader: sensorReader];
+        [iPadController setManagedObjectContext:objectContext];
+        [iPadController setSensorReader: [self sensorReader]];
         
         NSMutableArray* viewControllers = [[NSMutableArray alloc] initWithCapacity:0];
         
@@ -118,8 +103,13 @@
         navController.navigationBar.barStyle = UIBarStyleBlackOpaque;
         [navController pushViewController: navViewController animated:NO];
         
+        DataCollectionViewController* dataCollector = [[DataCollectionViewController alloc] initWithNibName:@"DataCollectionViewController_iPad" bundle:nil];
+        [dataCollector setTitle: @"Data Collection"];
+        [dataCollector setManagedObjectContext:objectContext];
+        [dataCollector setSensorReader: [self sensorReader]];
+        
         [viewControllers addObject: navController];
-        [viewControllers addObject: [[DataCollectionViewController alloc] initWithNibName:@"DataCollectionViewController_iPad" bundle:nil]];
+        [viewControllers addObject: dataCollector];
         
         iPadController.viewControllers = viewControllers;
         
@@ -157,8 +147,9 @@
 {
     if([self sensorReader] != nil)
     {
-        [[self sensorReader] stopReader];
+        [[self sensorReader] stopReader: ^(NSError* error){}];
     }
+    [self.sensorReader release];
 }
 
 @end

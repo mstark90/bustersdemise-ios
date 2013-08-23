@@ -8,8 +8,10 @@
 
 #import "DataCollectionViewController.h"
 #import "SensorRun.h"
+#import "BDSensorRun.h"
 #import "BDReportBuilder.h"
 #import "FrequencyPickerDataSource.h"
+#import "MBProgressHUD.h"
 
 #import <MessageUI/MessageUI.h>
 
@@ -20,6 +22,7 @@
 @implementation DataCollectionViewController
 
 @synthesize sensorReader;
+@synthesize managedObjectContext;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -28,6 +31,16 @@
         _frequencyDataSource = [[FrequencyPickerDataSource alloc] init];
     }
     return self;
+}
+
+- (void) dealloc
+{
+    if(self.managedObjectContext != nil)
+    {
+        [self.managedObjectContext release];
+        self.managedObjectContext = nil;
+    }
+    [super dealloc];
 }
 
 - (void)viewDidLoad
@@ -95,32 +108,59 @@
 }
 
 - (IBAction)startRecordingButtonClick:(UIButton *)sender {
-    SensorRun* sensorRun = [[SensorRun alloc] initWithEntity:[NSEntityDescription entityForName:@"SensorRun" inManagedObjectContext: [self getManagedObjectContext]] insertIntoManagedObjectContext:[self getManagedObjectContext]];
-    [sensorRun setDataSetName: [self.dataSetNameTextField text]];
-    [sensorRun setStartTime:[NSDate date]];
-    [sensorRun setWasAccelerometerRecorded:[NSNumber numberWithBool:self.accelerometerOnSwitch.on]];
-    [sensorRun setWasGyroscopeRecorded:[NSNumber numberWithBool:self.gyroscopeOnSwitch.on]];
-    [self.sensorReader setCurrentRun:sensorRun];
-    [self.sensorReader setCollectAccelerometer: self.accelerometerOnSwitch.on];
-    [self.sensorReader setCollectGyroscope: self.gyroscopeOnSwitch.on];
-    [self.sensorReader startReader];
-    [self.adjustFrequencyButton setEnabled: NO];
-    [self.accelerometerOnSwitch setEnabled: NO];
-    [self.gyroscopeOnSwitch setEnabled: NO];
-    [self.startRecordButton setEnabled: NO];
-    [self.stopRecordButton setEnabled: YES];
-    [self.dataSetNameTextField resignFirstResponder];
+    if([self.dataSetNameTextField.text length] > 0)
+    {
+        BDSensorRun* sensorRun = [[BDSensorRun alloc] init];
+        [sensorRun setDataSetName: [self.dataSetNameTextField text]];
+        [sensorRun setStartTime:[NSDate date]];
+        [sensorRun setWasAccelerometerRecorded: self.accelerometerOnSwitch.on];
+        [sensorRun setWasGyroscopeRecorded: self.gyroscopeOnSwitch.on];
+        [self.sensorReader setCurrentRun:sensorRun];
+        [self.sensorReader setCollectAccelerometer: self.accelerometerOnSwitch.on];
+        [self.sensorReader setCollectGyroscope: self.gyroscopeOnSwitch.on];
+        [self.sensorReader startReader];
+        [self.adjustFrequencyButton setEnabled: NO];
+        [self.accelerometerOnSwitch setEnabled: NO];
+        [self.gyroscopeOnSwitch setEnabled: NO];
+        [self.startRecordButton setEnabled: NO];
+        [self.dataSetNameTextField setEnabled: NO];
+        [self.stopRecordButton setEnabled: YES];
+        [self.dataSetNameTextField resignFirstResponder];
+    }
+    else
+    {
+        UIAlertView* error = [[UIAlertView alloc] initWithTitle:@"Error" message:@"The data set must have a name to continue." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+        [error show];
+    }
 }
 
 - (IBAction)stopRecordingClicked:(UIButton *)sender {
-    [self.sensorReader stopReader];
-    NSError* error = nil;
     [self.sensorReader.currentRun setEndTime: [NSDate date]];
-    [[self getManagedObjectContext] save: &error];
+
+    
+    
+    MBProgressHUD* loadingHud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    [loadingHud setLabelText:@"Saving..."];
+    [self.view addSubview: loadingHud];
+    [loadingHud showUsingAnimation:YES];
+
+    [self.sensorReader stopReader: ^(NSError* error)
+         {
+             [MBProgressHUD hideHUDForView:self.view animated:YES];
+             if(error != nil)
+             {
+                 NSLog(@"%@", error);
+                 UIAlertView* errorView = [[UIAlertView alloc] initWithTitle:@"Error" message:@"The data set could not be saved." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+                 [errorView show];
+             }
+             [self.sensorReader.currentRun release];
+             [self.sensorReader setCurrentRun: nil];
+         }];
     [self.adjustFrequencyButton setEnabled: YES];
     [self.accelerometerOnSwitch setEnabled: YES];
     [self.gyroscopeOnSwitch setEnabled: YES];
     [self.startRecordButton setEnabled: YES];
+    [self.dataSetNameTextField setEnabled: YES];
     [self.stopRecordButton setEnabled: NO];
     [self.dataSetNameTextField setText:@""];
 }
@@ -129,7 +169,9 @@
     
     NSNumber* currentFrequency = [NSNumber numberWithInt: [sensorReader collectionFrequency]];
     
-    NSInteger selectedRow = (int)[[_frequencyDataSource getFrequencies] indexOfObject:currentFrequency];
+    NSArray* frequencies = [_frequencyDataSource getFrequencies];
+    
+    NSInteger selectedRow = (int)[frequencies indexOfObject:currentFrequency];
     
     [self.frequencyPicker selectRow:selectedRow inComponent:0 animated:NO];
     [_pickerActionSheet showInView:[[UIApplication sharedApplication] keyWindow]];
@@ -162,16 +204,6 @@
 {
     [textField resignFirstResponder];
     return YES;
-}
-
--(NSManagedObjectContext*) getManagedObjectContext
-{
-    return _managedObjectContext;
-}
-
--(void) setManagedObjectContext:(NSManagedObjectContext *)managedObjectContext
-{
-    _managedObjectContext = managedObjectContext;
 }
 
 

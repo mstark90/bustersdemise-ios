@@ -10,6 +10,8 @@
 #import <MessageUI/MessageUI.h>
 #import <CoreData/CoreData.h>
 
+#import "iPadViewController.h"
+
 @interface SetListViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, MFMailComposeViewControllerDelegate>
 {
     NSArray* _currentData;
@@ -24,7 +26,7 @@
 @property(retain, nonatomic) IBOutlet UIBarButtonItem* clearAllButtonItem;
 @property(retain, nonatomic) IBOutlet UIBarButtonItem* exportAllButtonItem;
 @property(retain, nonatomic) IBOutlet UIToolbar* optionsBar;
-@property(retain, nonatomic) NSManagedObjectContext* managedObjectContext;
+@property(retain, atomic) NSManagedObjectContext* managedObjectContext;
 
 -(void) reloadData;
 

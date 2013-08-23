@@ -10,8 +10,7 @@
 #import <MessageUI/MessageUI.h>
 #import <CoreData/CoreData.h>
 #import "BDSensorReader.h"
-#import "SensorRun.h"
-#import "SensorDataRecord.h"
+#import "BDSensorRun.h"
 
 @interface TabViewController : UITabBarController<UITabBarControllerDelegate>
 

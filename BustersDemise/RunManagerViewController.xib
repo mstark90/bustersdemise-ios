@@ -65,8 +65,12 @@
 					<string key="NSReuseIdentifierKey">_NS:15</string>
 					<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 					<int key="IBUIBarStyle">1</int>
+					<object class="NSColor" key="IBUITintColor">
+						<int key="NSColorSpace">2</int>
+						<bytes key="NSRGB">MC4wOTAxOTYwODA1MSAwLjcwMTk2MDgwMjEgMC4xMjE1Njg2MzUxAA</bytes>
+					</object>
 				</object>
-				<array key="IBUIViewControllers" id="0"/>
+				<array class="NSMutableArray" key="IBUIViewControllers"/>
 			</object>
 		</array>
 		<object class="IBObjectContainer" key="IBDocument.Objects">
@@ -75,7 +79,7 @@
 				<array key="orderedObjects">
 					<object class="IBObjectRecord">
 						<int key="objectID">0</int>
-						<reference key="object" ref="0"/>
+						<array key="object" id="0"/>
 						<reference key="children" ref="1000"/>
 						<nil key="parent"/>
 					</object>

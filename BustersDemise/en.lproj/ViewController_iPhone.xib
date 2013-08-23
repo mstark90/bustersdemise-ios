@@ -70,6 +70,10 @@
 						<bytes key="NSWhite">MCAwAA</bytes>
 					</object>
 					<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+					<object class="NSColor" key="IBUITintColor">
+						<int key="NSColorSpace">2</int>
+						<bytes key="NSRGB">MC4wOTAxOTYwODA1MSAwLjY3MDU4ODI1NDkgMC4xOTYwNzg0NDk1AA</bytes>
+					</object>
 				</object>
 			</object>
 		</array>

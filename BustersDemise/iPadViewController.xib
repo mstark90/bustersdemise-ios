@@ -64,8 +64,12 @@
 						<bool key="IBUIMultipleTouchEnabled">YES</bool>
 						<string key="targetRuntimeIdentifier">IBIPadFramework</string>
 						<int key="IBUIBarStyle">1</int>
+						<object class="NSColor" key="IBUITintColor">
+							<int key="NSColorSpace">1</int>
+							<bytes key="NSRGB">MC4wMjI2NzQxMzE0OSAwLjYyNTIzMzUyNTggMAA</bytes>
+						</object>
 					</object>
-					<reference key="IBUIViewControllers" ref="0"/>
+					<array class="NSMutableArray" key="IBUIViewControllers"/>
 				</object>
 				<object class="IBUIViewController" key="IBUIDetailViewController" id="190681410">
 					<reference key="IBUIParentViewController" ref="363771311"/>

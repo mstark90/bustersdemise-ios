@@ -8,6 +8,8 @@
 
 #import "SetInfoViewController.h"
 #import "BDReportBuilder.h"
+#import "BDEmailHelper.h"
+#import "MBProgressHUD.h"
 
 @interface SetInfoViewController ()
 
@@ -29,12 +31,19 @@
 {
     [super viewDidLoad];
     UIBarButtonItem* exportButton = [[UIBarButtonItem alloc] initWithTitle:@"Export" style:UIBarButtonItemStyleBordered target:self action:@selector(exportRunData:)];
-    [[self navigationItem] setRightBarButtonItem: exportButton];
+    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+    {
+        [self.pageTitle setTitle: [_displayedRun dataSetName]];
+    }
+    else
+    {
+        [[self navigationItem] setRightBarButtonItem: exportButton];
+    }
     [self.startTimeLabel setText: [_dateFormatter stringFromDate: [_displayedRun startTime]]];
     [self.endTimeLabel setText: [_dateFormatter stringFromDate: [_displayedRun endTime]]];
-    [self.gyroscopeOnLabel setText: [[_displayedRun wasGyroscopeRecorded] boolValue] == YES ? @"Yes" : @"No"];
-    [self.accelerometerOnLabel setText: [[_displayedRun wasAccelerometerRecorded] boolValue] == YES ? @"Yes" : @"No"];
-    [self.eventCountLabel setText: [NSString stringWithFormat:@"%d", [[_displayedRun dataRecords] count]]];
+    [self.gyroscopeOnLabel setText: [[_displayedRun wasGyroscopeOn] boolValue] == YES ? @"Yes" : @"No"];
+    [self.accelerometerOnLabel setText: [[_displayedRun wasAccelerometerOn] boolValue] == YES ? @"Yes" : @"No"];
+    [self.eventCountLabel setText: [NSString stringWithFormat:@"%ld", [[_displayedRun eventCount] longValue]]];
 }
 
 - (void)didReceiveMemoryWarning
@@ -51,16 +60,34 @@
 
 -(void) exportRunData: (UIBarButtonItem*)sender
 {
-    MFMailComposeViewController* controller = [[MFMailComposeViewController alloc] init];
-    controller.mailComposeDelegate = self;
-    [controller setSubject:@"Buster's Demise Output Data"];
-    [controller addAttachmentData:[[BDReportBuilder createReport: _displayedRun] dataUsingEncoding:NSUTF8StringEncoding] mimeType:@"text/plain" fileName:[NSString stringWithFormat:@"%@.csv", [_displayedRun dataSetName]]];
-    [controller setMessageBody:@"Attached to this e-mail are all the selected runs of Buster's Demise." isHTML:NO];
-    if (controller)
-        [self presentViewController:controller animated:YES completion:^(void)
-         {
-             
-         }];
+    NSMutableDictionary* generatedReports = [[NSMutableDictionary alloc] init];
+    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
+    {
+        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    }
+    else
+    {
+        [MBProgressHUD showHUDAddedTo:self.splitViewController.view animated:YES];
+    }
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^(void)
+       {
+           BDSensorRun* run = [NSKeyedUnarchiver unarchiveObjectWithFile: [_displayedRun dataFileName]];
+           [generatedReports setValue:[[BDReportBuilder createReport: run] dataUsingEncoding:NSUTF8StringEncoding] forKey:[NSString stringWithFormat:@"%@.csv", [_displayedRun dataSetName]]];
+           dispatch_async(dispatch_get_main_queue(), ^(void)
+              {
+                  if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
+                  {
+                      [MBProgressHUD hideHUDForView:self.view animated:YES];
+                      [BDEmailHelper sendEmail:self emailSubject:@"Buster's Demise Output Data" emailText:@"Attached to this e-mail are the selected data sets from Buster's Demise." reports:generatedReports viewController:self];
+                  }
+                  else
+                  {
+                      [MBProgressHUD hideHUDForView:self.splitViewController.view animated:YES];
+                      [BDEmailHelper sendEmail:self emailSubject:@"Buster's Demise Output Data" emailText:@"Attached to this e-mail are the selected data sets from Buster's Demise." reports:generatedReports viewController:self.splitViewController];
+                  }
+                  [generatedReports release];
+              });
+       });
 }
 
 - (void)mailComposeController:(MFMailComposeViewController*)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error

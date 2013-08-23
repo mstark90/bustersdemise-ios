@@ -79,12 +79,13 @@
 {
     UIViewController* newViewController = nil;
     bool isDetailView = false;
-    if(indexPath.row == 0)
+    if(indexPath.row == 0 && [[rootController.viewControllers objectAtIndex: 1] isKindOfClass: [DataCollectionViewController class]] == NO)
     {
         DataCollectionViewController* dataCollector = [[DataCollectionViewController alloc] initWithNibName: @"DataCollectionViewController_iPad" bundle:nil];
         
         [dataCollector setTitle: @"Data Collection"];
-        [dataCollector setManagedObjectContext: [rootController managedObjectContext]];
+        [dataCollector setManagedObjectContext: rootController.managedObjectContext];
+        [rootController.managedObjectContext retain];
         [dataCollector setSensorReader: [rootController sensorReader]];
         
         newViewController = dataCollector;
@@ -93,8 +94,10 @@
     else if(indexPath.row == 1)
     {
         SetListViewController* setList = [[SetListViewController alloc] initWithNibName:@"SetListViewController" bundle:nil];
-        [setList setManagedObjectContext: [rootController managedObjectContext]];
+        [setList setManagedObjectContext: rootController.managedObjectContext];
+        [rootController.managedObjectContext retain];
         [setList setTitle: @"Data Sets"];
+        [setList reloadData];
         [self.navigationController pushViewController:setList animated:YES];
     }
     else if(indexPath.row == 2)

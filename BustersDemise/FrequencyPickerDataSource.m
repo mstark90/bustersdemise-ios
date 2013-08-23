@@ -14,7 +14,8 @@
 
 -(id) init
 {
-    _frequencies = [NSArray arrayWithObjects: [NSNumber numberWithInt:25], [NSNumber numberWithInt:25], [NSNumber numberWithInt:50], [NSNumber numberWithInt:75], [NSNumber numberWithInt:100], [NSNumber numberWithInt:125], [NSNumber numberWithInt:150], [NSNumber numberWithInt:175], [NSNumber numberWithInt:200], nil];
+    _frequencies = [NSArray arrayWithObjects: [NSNumber numberWithInt:25], [NSNumber numberWithInt:50], [NSNumber numberWithInt:75], [NSNumber numberWithInt:100], nil];
+    [_frequencies retain];
     return self;
 }
 

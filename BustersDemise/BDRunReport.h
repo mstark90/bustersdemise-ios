@@ -7,11 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "SensorRun.h"
+#import "BDSensorRun.h"
 
 @interface BDRunReport : UIDocument
 
-@property(nonatomic, strong) SensorRun* sensorRun;
+@property(nonatomic, strong) BDSensorRun* sensorRun;
 
 - (id)init;
 

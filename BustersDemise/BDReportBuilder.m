@@ -7,12 +7,12 @@
 //
 
 #import "BDReportBuilder.h"
-#import "SensorRun.h"
-#import "SensorDataRecord.h"
+#import "BDSensorRun.h"
+#import "BDSensorRecord.h"
 
 @implementation BDReportBuilder
 
-+(NSString*) createReport: (SensorRun*) sensorRun
++(NSString*) createReport: (BDSensorRun*) sensorRun
 {
     NSMutableString* mutableString = [[NSMutableString alloc] init];
     [mutableString appendString: @"timestamp, acceleration_x, acceleration_y, acceleration_z,"];
@@ -21,14 +21,16 @@
     NSString *formatString = @"yyyy-MM-dd'T'HH:mm:ss.SSS";
     [formatter setDateFormat:formatString];
     NSSortDescriptor* sorter = [NSSortDescriptor sortDescriptorWithKey:@"timestamp" ascending:YES];
-    NSArray* sortedRecords = [sensorRun.dataRecords sortedArrayUsingDescriptors:[NSArray arrayWithObjects: sorter, nil]];
-    for(SensorDataRecord* record in sortedRecords)
+    NSArray* sortedRecords = [[sensorRun getSensorRecords] sortedArrayUsingDescriptors:[NSArray arrayWithObjects: sorter, nil]];
+    for(BDSensorRecord* record in sortedRecords)
     {
-        [mutableString appendFormat: @"%@, %@, %@, %@, %@, %@, %@\n", [formatter stringFromDate:record.timestamp],
+        [mutableString appendFormat: @"%@, %f, %f, %f, %f, %f, %f\n", [formatter stringFromDate:record.timestamp],
             record.accelerometerX, record.accelerometerY, record.accelerometerZ, record.gyroscopeX,
             record.gyroscopeY, record.gyroscopeZ];
         
     }
+    [formatter release];
+    formatter = nil;
     return [NSString stringWithString:mutableString];
 }
 

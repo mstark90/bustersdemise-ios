@@ -18,8 +18,6 @@
 
 @property (strong, nonatomic) UIViewController *viewController;
 
-@property (nonatomic, retain) NSManagedObjectContext *context;
-
 @property (nonatomic, retain) BDSensorReader* sensorReader;
 
 @end

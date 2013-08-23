@@ -22,6 +22,7 @@
 @property(retain, nonatomic) IBOutlet UILabel* gyroscopeOnLabel;
 @property(retain, nonatomic) IBOutlet UILabel* accelerometerOnLabel;
 @property(retain, nonatomic) IBOutlet UILabel* eventCountLabel;
+@property(retain, nonatomic) IBOutlet UINavigationItem* pageTitle;
 
 -(void) parseRun: (SensorRun*) run;
 

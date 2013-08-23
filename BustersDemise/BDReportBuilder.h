@@ -7,10 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "SensorRun.h"
+#import "BDSensorRun.h"
 
 @interface BDReportBuilder : NSObject
 
-+(NSString*) createReport: (SensorRun*) sensorRun;
++(NSString*) createReport: (BDSensorRun*) sensorRun;
 
 @end

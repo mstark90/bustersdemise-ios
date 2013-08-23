@@ -13,7 +13,7 @@
 @interface iPadViewController : UISplitViewController<UISplitViewControllerDelegate>
 
 @property(retain, nonatomic) BDSensorReader* sensorReader;
-@property(retain, nonatomic) NSManagedObjectContext* managedObjectContext;
+@property(retain, atomic) NSManagedObjectContext* managedObjectContext;
 @property(retain, nonatomic) IBOutlet UIViewController* rightViewController;
 @property(retain, nonatomic) IBOutlet UINavigationController* navigationController;
 
